@@ -30,7 +30,7 @@ app = Flask(__name__)
 
 # add this after app is defined
 app.config['DATABASE'] = os.environ.get(
-    'DATABASE_URL', 'dbname=learning_journal user=muazzezmira'
+    'DATABASE_URL', 'dbname=learning_journal'
 )
 
 # add the rest of this below the app.config statement
