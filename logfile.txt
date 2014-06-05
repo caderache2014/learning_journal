@@ -1,0 +1,76 @@
+2014-06-03T22:44:42.941909+00:00 heroku[api]: Release v2 created by cbillingham@gmail.com
+2014-06-03T22:44:42.941814+00:00 heroku[api]: Enable Logplex by cbillingham@gmail.com
+2014-06-03T22:45:52.666765+00:00 heroku[api]: Set DATABASE_URL config vars by cbillingham@gmail.com
+2014-06-03T22:45:52.936326+00:00 heroku[api]: Release v4 created by cbillingham@gmail.com
+2014-06-03T22:45:52.666851+00:00 heroku[api]: Release v3 created by cbillingham@gmail.com
+2014-06-03T22:45:52.936239+00:00 heroku[api]: Attach HEROKU_POSTGRESQL_AMBER resource by cbillingham@gmail.com
+2014-06-03T22:52:25+00:00 heroku[slug-compiler]: Slug compilation started
+2014-06-03T22:53:13+00:00 heroku[slug-compiler]: Slug compilation finished
+2014-06-03T22:53:13.686836+00:00 heroku[api]: Deploy 935b337 by cbillingham@gmail.com
+2014-06-03T22:53:13.687008+00:00 heroku[api]: Release v5 created by cbillingham@gmail.com
+2014-06-03T22:53:29.107442+00:00 heroku[api]: Starting process with command `python` by cbillingham@gmail.com
+2014-06-03T22:53:33.209160+00:00 heroku[run.5939]: State changed from starting to up
+2014-06-03T22:53:33.379578+00:00 heroku[run.5939]: Awaiting client
+2014-06-03T22:53:33.422938+00:00 heroku[run.5939]: Starting process with command `python`
+2014-06-03T22:54:27.579870+00:00 heroku[run.5939]: Process exited with status 0
+2014-06-03T22:54:27.590210+00:00 heroku[run.5939]: State changed from up to complete
+2014-06-04T22:25:14+00:00 heroku[slug-compiler]: Slug compilation started
+2014-06-04T22:25:32+00:00 heroku[slug-compiler]: Slug compilation finished
+2014-06-04T22:25:32.822050+00:00 heroku[api]: Deploy 84a696d by cbillingham@gmail.com
+2014-06-04T22:25:32.822155+00:00 heroku[api]: Release v6 created by cbillingham@gmail.com
+2014-06-04T22:26:18.970459+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=e29e2b09-93a5-4c32-bd3a-25475fb85415 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:26:19.525144+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=d93ec1e4-5c3d-4850-9fe7-5eb494fab839 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:26:59.062284+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=f955ece5-5e3f-486d-aef8-d926d926dbad fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:26:59.266589+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=e03f5e30-7931-406f-84a4-f315655eda82 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:28:09.834659+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=0ad42103-0316-40be-989d-ea58e3cb0d10 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:28:10.284988+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=c2f3d392-8542-4f79-b2f8-479f667757f5 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:28:12.780666+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=595770f8-e657-4176-a737-a11de4cd3ffc fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:28:12.970440+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=ab6a3762-4d4c-40a8-b970-5c464ce1c138 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:28:29.551396+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=42869f83-330e-4e1f-8a94-df472f70db19 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:28:29.773319+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=54f09db2-8500-4045-81d7-6d791c3dabcc fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:31:29+00:00 heroku[slug-compiler]: Slug compilation started
+2014-06-04T22:31:50+00:00 heroku[slug-compiler]: Slug compilation finished
+2014-06-04T22:31:50.215410+00:00 heroku[api]: Release v7 created by cbillingham@gmail.com
+2014-06-04T22:31:50.215224+00:00 heroku[api]: Deploy e6a2f0c by cbillingham@gmail.com
+2014-06-04T22:32:04.631375+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=48af4506-09c5-4881-a34e-1a4cefb63faa fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:32:04.844343+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=e3463e44-c7c9-486f-a3c0-c4f5f3da87d3 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:32:39.873889+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=a9f479f6-ec76-472e-9eac-ee80b43a34aa fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:32:40.103279+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=393e3cff-bbfa-4e53-a822-770480b62870 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:34:10.520021+00:00 heroku[api]: Starting process with command `python` by cbillingham@gmail.com
+2014-06-04T22:34:15.147106+00:00 heroku[run.3552]: State changed from starting to up
+2014-06-04T22:34:15.222285+00:00 heroku[run.3552]: Starting process with command `python`
+2014-06-04T22:34:15.158962+00:00 heroku[run.3552]: Awaiting client
+2014-0
+6-04T22:35:25.727321+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=997c630a-3d04-4687-ad4c-ad1c4eefe57e fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:35:26.208824+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=8f9e2a06-e2b5-4f90-8b00-06048ebb3e32 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:36:17.013256+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=3508fb36-d9c4-42fa-94c2-c5f774ee41de fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:36:17.264313+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=f26c938f-ce3f-4ebf-9ec5-eb3ed5e01ac3 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:36:18.139761+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=2feb9892-9f39-4b05-81e5-e2a74e33cd73 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:36:18.343570+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=8d0ffefa-101a-4e28-8ba3-0c1145947f65 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:36:18.989911+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=886b719b-ed05-456d-a852-fa1479c52957 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:36:19.229955+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=231032d0-c170-4f8b-a810-6c7a06f0ca49 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:36:27.808219+00:00 heroku[run.3552]: State changed from up to complete
+2014-06-04T22:36:27.781921+00:00 heroku[run.3552]: Process exited with status 0
+2014-06-04T22:36:29.465292+00:00 heroku[api]: Starting process with command `python` by cbillingham@gmail.com
+2014-06-04T22:36:33.549978+00:00 heroku[run.4021]: State changed from starting to up
+2014-06-04T22:36:33.559135+00:00 heroku[run.4021]: Awaiting client
+2014-06-04T22:36:33.641128+00:00 heroku[run.4021]: Starting process with command `python`
+2014-06-04T22:36:39.572666+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=ecb93297-3568-4f91-a730-43e12753b1fe fw
+d="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:36:39.784327+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=c81113ac-5347-4426-b751-8d5248c6e2bd fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:36:40.640306+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=906e93ce-1b43-4bff-b6fd-a17f6c843b04 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:36:40.819172+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=5b1b7910-1f40-43ce-a069-f36a64071113 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:38:19.698479+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=d554ecec-3557-47d5-a33e-d705fde223f3 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:38:19.889052+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=282d2d62-29e3-4601-9c91-a0a2c0209e0a fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:38:31.857085+00:00 heroku[run.4021]: State changed from up to complete
+2014-06-04T22:38:31.829252+00:00 heroku[run.4021]: Process exited with status 0
+2014-06-04T22:38:54.719961+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=85422dee-9534-4dc1-bbbe-064701ef52f3 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:38:54.956648+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=f07db40e-2be7-48b1-a286-e029301f8ad1 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:41:43.240264+00:00 heroku[api]: Starting process with command `python` by cbillingham@gmail.com
+2014-06-04T22:41:47.559868+00:00 heroku[run.5607]: State changed from starting to up
+2014-06-04T22:41:47.467868+00:00 heroku[run.5607]: Awaiting client
+2014-06-04T22:41:47.495060+00:00 heroku[run.5607]: Starting process with command `python`
+2014-06-04T22:43:38.015690+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/ host=intense-basin-9295.herokuapp.com request_id=8ba24a5b-392d-4f99-b9c8-5bf5112f0742 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:43:38.209088+00:00 heroku[router]: at=error code=H14 desc="No web processes running" method=GET path=/favicon.ico host=intense-basin-9295.herokuapp.com request_id=8287c259-b32d-4705-8f39-1e04c6720be9 fwd="199.231.242.170" dyno= connect= service= status=503 bytes=
+2014-06-04T22:44:37.727057+00:00 heroku[run.5607]: Process exited with status 0
+2014-06-04T22:44:37.743516+00:00 heroku[run.5607]: State changed from up to complete
