@@ -3,7 +3,10 @@
 import os
 import psycopg2
 import datetime
+import markdown
 from contextlib import closing
+from datetime import datetime
+from dateutil import tz
 from flask import Flask
 from flask import g
 from flask import render_template
@@ -27,14 +30,159 @@ CREATE TABLE entries (
 DB_ENTRY_INSERT = """
 INSERT INTO entries (title, text, created) VALUES (%s, %s, %s)
 """
+
+DB_SPECIFIC_ENTRY = """
+SELECT id, title, text, created FROM entries WHERE id = %s
+"""
 DB_ENTRIES_LIST = """
 SELECT id, title, text, created FROM entries ORDER BY created DESC
+"""
+DB_ENTRY_UPDATE = """
+UPDATE ONLY entries AS en
+SET (title, text, created) = (%s, %s, %s)
+WHERE entry_id = %s
+"""
+
+DB_ENTRY_LIST=  """
+SELECT id, title, text, created FROM entries AS en
+WHERE text = %s AND title = %s
 """
 
 
 
 # add this just below the SQL table definition we just created
 app = Flask(__name__)
+
+#1
+def get_local_datetime(utc_time):
+    from_zone = tz.tzutc()
+    to_zone = tz.tzlocal()
+    utc_time = utc_time.replace(tzinfo=from_zone)
+    return utc_time.astimezone(to_zone)
+
+#2
+def get_entry(entry_id):
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute(DB_ENTRY_LIST, [entry_id])
+    keys = ('title', 'text', 'created')
+    entry = dict(zip(keys, cur.fetchone()))
+    entry['id'] = entry_id
+    return entry
+
+#3
+def get_all_entries():
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute(DB_ENTRIES_LIST)
+    entries = cur.fetchall()
+    return [dict(zip(keys, e)) for e in entries]
+
+#4
+def get_specific_entry(entry_no):
+    conn = get_database_connection()
+    cur = conn.cursor()
+    cur.execute(DB_SPECIFIC_ENTRY, [entry_no])
+    keys = ('id', 'title', 'text', 'created')
+    return [dict(zip(keys, e)) for e in cur.fetchall()][0]
+
+#5
+def write_entry(title, text):
+    if not title or not text:
+        raise ValueError("Need title and text required for writing an entry")
+    con = get_database_connection()
+    cur = con.cursor()
+    now = datetime.utcnow()
+    cur.execute(DB_ENTRY_INSERT, [title, text, now])
+
+#6
+def update_entry(entry_id, new_title, new_text):
+    if not new_title or not new_text:
+        raise ValueError("Text or title required for updating an entry")
+    conn = get_database_connection()
+    curr = conn.cursor()
+    now = datetime.datetime.utcnow()
+    cur.execute(DB_ENTRY_UPDATE, (new_title, new_text, now, entry_Id))
+
+#7
+@app.route('/')
+def show_entries():
+    entries = get_entries_all()
+    for e in entries:
+        entry['text'] = markdown.markdown(entry['text'], extensions=['codehilite'])
+        entry['created'] = get_local_datetime(entry['created'])
+    return render_template('list_entries.html', entries=entries)
+
+#8
+@app.route('/entry/<int:entry_id/')
+def show_entry(entry_id):
+        e = get_entry(entry_id)
+        e['text'] = markdown.markdown(e['text'], extensions=['codehilite']) 
+        return render_template('list_entry.html', entry=entry)
+
+#8
+@app.route('/add', methods=['POST'])
+def add_entry():
+        if 'logged_in' in session:
+            try:
+                write_entry(request.form['title'], request.form['text'])
+            except psycopg2.Error:
+                abort(500)
+            return redirect(url_for('show_entries'))
+        else:
+            return redirect(url_for('login'))
+
+
+#9
+ @app.route('/entry/<int:entry_id>/edit/', methods=['GET', 'POST'])
+def edit_entry(entry_id):
+    if 'logged_in' in session:
+        if request.method ==  'GET':
+            e = get_entry(entry_id)
+            return render_template('edit.html', entry=entry)
+        elif request.method == 'POST':
+            try:
+                update_entry(entry_id, request.form['title'], request.form['text'])
+            except psycopg2.Error:
+                abort(500)
+            return redirect(url_for, 'show_entry', entry_id=entry_id)
+    else:
+        return redirect(url_for('login'))
+
+#10
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        try:
+            do_login(request.form['username'].encode('utf-8'), request.form['password'].encode('utf-8'))
+        except ValueError:
+            error = "Failed to Log In"
+    else:
+        return redirect(url_for('show_entries'))
+    return render_template('login.html', error=error)
+
+#11
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('show_entries'))
+
+#12
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('show_entries'))
+
+#13
+@app.route('/edit/<entry_number>', methods=['GET', 'POST'])
+def edit(entry_no):
+    if request.method == 'GET':
+        e = get_specific_entry(entry_no)
+        return render_template('edit.html', entry=entry)
+    elif request.method == 'POST':
+        update_entry(request.form['title'], request.form['text'], entry_no )
+        return redirection(url_for('show_entries'))
 
 # add this after app is defined
 app.config['DATABASE'] = os.environ.get(
@@ -58,12 +206,12 @@ app.config['SECRET_KEY'] = os.environ.get(
     'FLASK_SECRET_KEY', 'sooperseekritvaluenooneshouldknow'
 )
 
-# add the rest of this below the app.config statement
+#14
 def connect_db():
     """Return a connection to the configured database"""
     return psycopg2.connect(app.config['DATABASE'])
 
-# add this function after the connect_db function
+#15
 def init_db():
     """Initialize the database using DB_SCHEMA
 
@@ -73,24 +221,23 @@ def init_db():
         db.cursor().execute(DB_SCHEMA)
         db.commit()
 
-"""
-@app.route('/')
-def hello():
-    return u'Hello world!'
-"""
-
-@app.route('/')
-def show_entries():
-    entries = get_all_entries()
-    return render_template('list_entries.html', entries=entries)
-
+#16
 def get_database_connection():
     db = getattr(g, 'db', None)
     if db is None:
         g.db = db = connect_db()
     return db
 
-@app.teardown_request
+#17
+def do_login(username='', passwd=''):
+    if username != app.config['ADMIN_USERNAME']:
+        raise ValueError
+    if not pbkdf2_sha256.verify(passwd, app.config['ADMIN_PASSWORD']):
+        raise ValueError
+    session['logged_in'] = True
+
+#18
+ @app.teardown_request
 def teardown_request(exception):
     db = getattr(g, 'db', None)
     if db is not None:
@@ -101,61 +248,8 @@ def teardown_request(exception):
         else:
             # otherwise, commit
             db.commit()
-        db.close()
+        db.close()   
 
-def write_entry(title, text):
-    if not title or not text:
-        raise ValueError("Title and text required for writing an entry")
-    con = get_database_connection()
-    cur = con.cursor()
-    now = datetime.datetime.utcnow()
-    cur.execute(DB_ENTRY_INSERT, [title, text, now])
-
-def get_all_entries():
-    """return a list of all entries as dicts"""
-    con = get_database_connection()
-    cur = con.cursor()
-    cur.execute(DB_ENTRIES_LIST)
-    keys = ('id', 'title', 'text', 'created')
-    return [dict(zip(keys, row)) for row in cur.fetchall()]
-
-# and then down by the l
-@app.route('/add', methods=['POST'])
-def add_entry():
-    try:
-        write_entry(request.form['title'], request.form['text'])
-    except psycopg2.Error:
-        # this will catch any errors generated by the database
-        abort(500)
-    return redirect(url_for('show_entries'))
-
-
-
-def do_login(username='', passwd=''):
-    if username != app.config['ADMIN_USERNAME']:
-        raise ValueError
-    if not pbkdf2_sha256.verify(passwd, app.config['ADMIN_PASSWORD']):
-        raise ValueError
-    session['logged_in'] = True
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        try:
-            do_login(request.form['username'].encode('utf-8'),
-                     request.form['password'].encode('utf-8'))
-        except ValueError:
-            error = "Login Failed"
-        else:
-            return redirect(url_for('show_entries'))
-    return render_template('login.html', error=error)
-
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    return redirect(url_for('show_entries'))
-    
 # put this at the very bottom of the file.
 if __name__ == '__main__':
     app.run(debug=True)
