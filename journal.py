@@ -76,6 +76,7 @@ def get_all_entries():
     cur = conn.cursor()
     cur.execute(DB_ENTRIES_LIST)
     entries = cur.fetchall()
+    keys = ('id', 'title', 'text', 'created')
     return [dict(zip(keys, e)) for e in entries]
 
 #4
@@ -107,14 +108,14 @@ def update_entry(entry_id, new_title, new_text):
 #7
 @app.route('/')
 def show_entries():
-    entries = get_entries_all()
-    for e in entries:
+    entries = get_all_entries()
+    for entry in entries:
         entry['text'] = markdown.markdown(entry['text'], extensions=['codehilite'])
         entry['created'] = get_local_datetime(entry['created'])
     return render_template('list_entries.html', entries=entries)
 
 #8
-@app.route('/entry/<int:entry_id/')
+@app.route('/entry/<int:entry_id>/')
 def show_entry(entry_id):
         e = get_entry(entry_id)
         e['text'] = markdown.markdown(e['text'], extensions=['codehilite']) 
@@ -134,7 +135,7 @@ def add_entry():
 
 
 #9
- @app.route('/entry/<int:entry_id>/edit/', methods=['GET', 'POST'])
+@app.route('/entry/<int:entry_id>/edit/', methods=['GET', 'POST'])
 def edit_entry(entry_id):
     if 'logged_in' in session:
         if request.method ==  'GET':
@@ -156,19 +157,13 @@ def login():
     if request.method == 'POST':
         try:
             do_login(request.form['username'].encode('utf-8'), request.form['password'].encode('utf-8'))
+            return redirect(url_for('show_entries'))
         except ValueError:
             error = "Failed to Log In"
-    else:
-        return redirect(url_for('show_entries'))
+        
     return render_template('login.html', error=error)
 
 #11
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    return redirect(url_for('show_entries'))
-
-#12
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
@@ -237,7 +232,7 @@ def do_login(username='', passwd=''):
     session['logged_in'] = True
 
 #18
- @app.teardown_request
+@app.teardown_request
 def teardown_request(exception):
     db = getattr(g, 'db', None)
     if db is not None:

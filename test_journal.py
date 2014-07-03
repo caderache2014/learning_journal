@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 from contextlib import closing
 import pytest
-
 from journal import app
 from journal import connect_db
 from journal import get_database_connection
 from journal import init_db
 from flask import session
-
 
 TEST_DSN = 'dbname=test_learning_journal'
 
@@ -112,7 +110,10 @@ def test_add_entries(db):
         u'title': u'Hello',
         u'text': u'This is a post',
     }
-    actual = app.test_client().post(
+    with app.test_client() as c:
+        with c.session_transaction() as sess:
+            sess['logged_in'] = True
+    actual = c.post(
         '/add', data=entry_data, follow_redirects=True
     ).data
     assert 'No entries here so far' not in actual
@@ -172,7 +173,7 @@ def test_login_success(db):
 def test_login_fails(db):
     username, password = ('admin', 'wrong')
     response = login_helper(username, password)
-    assert 'Login Failed' in response.data
+    assert 'Failed to Log In' in response.data
 
 def test_logout(db):
     home = login_helper('admin', 'admin').data
