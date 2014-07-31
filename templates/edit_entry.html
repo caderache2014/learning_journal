@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block body %}
+
+<form action="/update_entry/{{ entries[0] }}" method="POST" class="edit_entry">
+  <div class="field">
+    <label for="title">Title</label>
+    <input type="text" size="30" name="title" id="title"
+      value = "{{ entries[1] }}"/>
+  </div>
+  <div class="field">
+    <label for="text">Text</label>
+    <textarea name="text" id="text" rows="5" cols="80">{{ entries[2] }}</textarea>
+  </div>
+  <div class="control_row">
+    <input type="submit" value="Accept" name="Accept Edit"/>
+  </div>
+</form>
+</aside>
+{% endblock %}

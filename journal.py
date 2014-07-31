@@ -2,7 +2,6 @@
 # add this at the top, just below the 'coding' line
 import os
 import psycopg2
-import datetime
 import markdown
 from contextlib import closing
 from datetime import datetime
@@ -16,6 +15,9 @@ from flask import url_for
 from flask import redirect
 from flask import session
 from passlib.hash import pbkdf2_sha256
+from pyshorteners.shorteners import Shortener
+
+shortener = Shortener('GoogleShortener')
 
 
 DB_SCHEMA = """
@@ -53,6 +55,10 @@ WHERE text = %s AND title = %s
 # add this just below the SQL table definition we just created
 app = Flask(__name__)
 
+#0
+def _markdown(text):
+    return markdown.markdown(text, extensions=['codehilite'])
+
 #1
 def get_local_datetime(utc_time):
     from_zone = tz.tzutc()
@@ -65,9 +71,13 @@ def get_entry(entry_id):
     conn = get_database_connection()
     cur = conn.cursor()
     cur.execute(DB_ENTRY_LIST, [entry_id])
-    keys = ('title', 'text', 'created')
-    entry = dict(zip(keys, cur.fetchone()))
-    entry['id'] = entry_id
+    keys = ('id', 'title', 'text', 'created')
+    try:
+        fetched = cur.fetchall()[0]
+    except IndexError:
+        return None
+    entry = {keys[i]: fetched[i] for i in xrange(len(keys))}
+    entry['html'] = _markdown(entry['text'])
     return entry
 
 #3
@@ -105,6 +115,12 @@ def update_entry(entry_id, new_title, new_text):
     now = datetime.datetime.utcnow()
     cur.execute(DB_ENTRY_UPDATE, (new_title, new_text, now, entry_Id))
 
+def get_one_entry_ajax():
+    con = get_database_connection()
+    cur = con.cursor()
+    cur.execute(DB_ENTRIES_LIST)
+    return cur.fetchone()
+    
 #7
 @app.route('/')
 def show_entries():
@@ -129,12 +145,31 @@ def add_entry():
                 write_entry(request.form['title'], request.form['text'])
             except psycopg2.Error:
                 abort(500)
-            return redirect(url_for('show_entries'))
+            return redirect(url_for('show_new_entry_ajax'))
         else:
             return redirect(url_for('login'))
 
+@app.route('/show_new_entry_ajax')
+def show_new_entry_ajax():
+    entry = get_one_entry_ajax()
+    return render_template('show_with_ajax.html', entry=entry)
 
-#9
+#COPY
+@app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
+def edit_post(post_id):
+    if not post_id or 'logged_in' not in session or \
+        session['logged_in'] is False:
+            return redirect(url_for('show_entries'))
+    entry = get_entry(post_id)
+    if request.method == 'POST' and entry is not None:
+        try:
+            edit_entry(post_id, request.form['title'], request.form['text'])
+            return redirect(url_for('show_entries'))
+        except psycopg2.Error:
+            abort(500)
+    return render_template('edit_entry.html', entry=entry)
+
+
 @app.route('/entry/<int:entry_id>/edit/', methods=['GET', 'POST'])
 def edit_entry(entry_id):
     if 'logged_in' in session:
@@ -150,6 +185,14 @@ def edit_entry(entry_id):
     else:
         return redirect(url_for('login'))
 
+#COPY
+def edit_entry(post_id, title, text):
+    if not title or not text:
+        raise ValueError("Title and text required for writing an entry")
+    con = get_database_connection()
+    cur = con.cursor()
+    now = datetime.datetime.utcnow()
+    cur.execute(DB_ENTRY_EDIT, (title, text, now, post_id))
 #10
 @app.route('/login', methods=['GET', 'POST'])
 def login():

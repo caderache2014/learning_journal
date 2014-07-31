@@ -1,0 +1,13 @@
+<aritcle class="entry" id="entry={{entry[0]}}">
+  <h3>{{ entry[1] }}</h3>
+  <p class="dateline">{{ entry[3].strftime('%b. %d, %Y') }}
+  <div class="entry_body">
+    {{ entry[2]|safe }}
+    <div class="select_entry">
+      <a href="edit/{{entry.id}}">Edit</a>
+    </div>
+    <div>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ twitter_url }}#entry={{entry.id}}" data-lang="en">Tweet</a>
+    </div>
+  </div>
+</article>
